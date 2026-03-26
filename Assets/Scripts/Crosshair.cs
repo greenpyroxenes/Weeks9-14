@@ -1,19 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ControllerInput : MonoBehaviour
+public class Crosshair : MonoBehaviour
 {
-
-    public float speed = 5f;
+    public float speed = 8f;
     public Vector2 movement;
-    public AudioSource SFX;
     public bool controller = false;
     public bool cursor = false;
+    public BulletSpawner bulletScript;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -42,15 +41,6 @@ public class ControllerInput : MonoBehaviour
         }
     }
 
-    public void OnAttack(InputAction.CallbackContext context)
-    {
-        Debug.Log("Attack" + context.phase);
-        if(context.performed == true)
-        {
-            SFX.Play();
-        }
-    }
-
     public void OnPoint(InputAction.CallbackContext context)
     {
         //Same as mouse.current.position.readvalue
@@ -62,6 +52,14 @@ public class ControllerInput : MonoBehaviour
         else
         {
             cursor = false;
+        }
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.performed == true)
+        {
+            bulletScript.spawn = true;
         }
     }
 }
