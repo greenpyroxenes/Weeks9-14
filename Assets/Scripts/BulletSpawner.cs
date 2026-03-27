@@ -5,7 +5,10 @@ public class BulletSpawner : MonoBehaviour
 {
 
     public GameObject bulletPrefab;
+    public GameObject cross;
+    public Bullet shotScript;
     public bool spawn;
+    public Vector3 crosPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,8 +21,11 @@ public class BulletSpawner : MonoBehaviour
     {
         if(spawn == true)
         {
-            Instantiate(bulletPrefab, transform.position, transform.rotation);
+            Instantiate(bulletPrefab, this.transform);
+            shotScript = bulletPrefab.GetComponent<Bullet>();
+            crosPos = cross.transform.position;
             spawn = false;
+            shotScript.pew = true;
         }
     }
 

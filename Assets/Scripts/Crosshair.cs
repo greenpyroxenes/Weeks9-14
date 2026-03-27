@@ -8,6 +8,7 @@ public class Crosshair : MonoBehaviour
     public bool controller = false;
     public bool cursor = false;
     public BulletSpawner bulletScript;
+    public Vector3 shotPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -60,6 +61,7 @@ public class Crosshair : MonoBehaviour
         if (context.performed == true)
         {
             bulletScript.spawn = true;
+            shotPos = transform.position;
         }
     }
 }
