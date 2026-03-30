@@ -6,8 +6,9 @@ using UnityEngine.Rendering;
 
 public class EnemySpawner : MonoBehaviour
 {
-
+    //Set variables
     public BulletSpawner spawnScript;
+    public RocketSpawn rocketSpawnScript;
     public Enemy enemy;
     public GameObject enemyPrefab;
     public GameObject spawnedEnemy;
@@ -30,6 +31,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Get bounds of screen to be offset
         divide = (Screen.width / 6);
         divide2 = (Screen.height / 6);
         timer = 3;
@@ -38,6 +40,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Have the spawner go around the screen randomly
         Vector2 newPos = transform.position;
         newPos.x += speed * Time.deltaTime;
         newPos.y += speedY * Time.deltaTime;
@@ -47,6 +50,7 @@ public class EnemySpawner : MonoBehaviour
         borderTwo = Screen.width - (divide);
         borderThree = (Screen.height - Screen.height) + (divide2);
         borderFour = Screen.height - (divide2);
+        //if the spawner hits a border change direction, if it goes too far out set back to 0
         if (screenPos.x < borderOne || screenPos.x > borderTwo)
         {
             speed *= -1;
@@ -63,23 +67,23 @@ public class EnemySpawner : MonoBehaviour
         {
             transform.position = Vector2.zero;
         }
-        if (check == true)
-        {
-            bulletPos = spawnScript.GetBulletPos();
-        }
-        if(gone == true)
+        //Remove the enemy in the list and set varibles to be reset
+        if (gone == true)
         {
             enemies.Remove(spawnedEnemy);
             Destroy(spawnedEnemy);
             spawnScript.dest = false;
+            rocketSpawnScript.dest = false;
             gone = false;
             for (int i = 0; i < enemies.Count; i++)
             {
                 spawnScript.srEnemy = enemies[i].GetComponent<SpriteRenderer>();
+                rocketSpawnScript.srEnemy = enemies[i].GetComponent<SpriteRenderer>();
                 enemy = enemies[i].GetComponent<Enemy>();
                 spawnedEnemy = enemies[i];
             }
         }
+        //Timer counts down to spawn enemy. Enemy is spawned once timer reaches 0 and gets added to a list
         timer -= Time.deltaTime;
         if (timer <= 0)
         {
@@ -89,6 +93,7 @@ public class EnemySpawner : MonoBehaviour
             for (int i = 0; i < enemies.Count; i++)
             {
                 spawnScript.srEnemy = enemies[i].GetComponent<SpriteRenderer>();
+                rocketSpawnScript.srEnemy = enemies[i].GetComponent<SpriteRenderer>();
                 enemy = enemies[i].GetComponent<Enemy>();
             }
             timer = 3;

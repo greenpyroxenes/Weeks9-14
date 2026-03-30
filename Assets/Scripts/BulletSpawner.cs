@@ -3,11 +3,12 @@ using UnityEngine.InputSystem;
 
 public class BulletSpawner : MonoBehaviour
 {
-
+    //Same code as rocket spawner
     public GameObject bulletPrefab;
     public GameObject cross;
     public GameObject eSpawn;
     public Bullet shotScript;
+    public Crosshair crosshair;
     public EnemySpawner enemySpawn;
     public bool dest = false;
     public bool spawn = false;
@@ -35,6 +36,7 @@ public class BulletSpawner : MonoBehaviour
             shotScript.pew = true;
             shot = true;
             enemySpawn.check = true;
+            crosshair.spawned = false;
         }
         if (shot == true)
         {

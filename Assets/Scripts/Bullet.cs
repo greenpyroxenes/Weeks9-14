@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
+    //Same code as rocket
     public bool pew = false;
     public bool enemyDest = false;
     public BulletSpawner spawn;
@@ -48,15 +49,12 @@ public class Bullet : MonoBehaviour
             pew = false;
             Destroy(gameObject);
         }
-        if (spawn.spawned == true)
-        {
             if (enemySr.bounds.Contains(transform.position))
             {
                 pew = false;
                 spawn.dest = true;
                 Destroy(gameObject);
             }
-        }
     }
 
     
