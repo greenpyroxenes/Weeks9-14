@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,13 +7,15 @@ using UnityEngine.UIElements;
 public class Bullet : MonoBehaviour
 {
     public bool pew = false;
-    public bool destroy = false;
+    public bool enemyDest = false;
     public BulletSpawner spawn;
     public Vector3 cros;
     public Vector2 cur;
     public float xPos;
     public float yPos;
     float t = 0;
+    public SpriteRenderer sr;
+    public SpriteRenderer enemySr;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,6 +23,12 @@ public class Bullet : MonoBehaviour
     {
         spawn = GetComponentInParent<BulletSpawner>();
         cros = spawn.crosPos;
+        transform.parent = null;
+        sr = GetComponent<SpriteRenderer>();
+        if (spawn.spawned == true)
+        {
+            enemySr = spawn.srEnemy;
+        }
     }
 
     // Update is called once per frame
@@ -37,8 +46,18 @@ public class Bullet : MonoBehaviour
         if(transform.position == cros)
         {
             pew = false;
-            destroy = true;
             Destroy(gameObject);
         }
+        if (spawn.spawned == true)
+        {
+            if (enemySr.bounds.Contains(transform.position))
+            {
+                pew = false;
+                spawn.dest = true;
+                Destroy(gameObject);
+            }
+        }
     }
+
+    
 }
